@@ -8,6 +8,11 @@ phases:
       - chmod +x ./kubectl ./aws-iam-authenticator
       - export PATH=$PWD/:$PATH
       - yum -y update && yum -y install jq python3-pip python36-devel.x86_64 && pip3 install --upgrade awscli && yum -y install docker
+      - yum install -y yum-utils device-mapper-persistent-data lvm2
+      - yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      - dnf install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+      - yum install -y docker-ce docker-ce-cli containerd.io --nobest
+      - systemctl start docker && sudo systemctl enable docker
 
   pre_build:
       commands:
